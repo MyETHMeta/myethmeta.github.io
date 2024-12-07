@@ -2,7 +2,6 @@
   "name": "myethmeta",
   "version": "1.0.0",
   "description": "Decentralized metadata for Ethereum addresses (something like GrAvatar)",
-  "main": "index.js",
   "repository": "https://github.com/MyETHMeta/myethmeta.github.io.git",
   "author": "Laszlo Fazekas <thebojda@gmail.com>",
   "license": "MIT",
