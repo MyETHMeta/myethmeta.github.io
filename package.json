@@ -1,0 +1,21 @@
+{
+  "name": "myethmeta",
+  "version": "1.0.0",
+  "description": "Decentralized metadata for Ethereum addresses (something like GrAvatar)",
+  "main": "index.js",
+  "repository": "https://github.com/MyETHMeta/myethmeta.github.io.git",
+  "author": "Laszlo Fazekas <thebojda@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "parcel build src/index.html --dist-dir docs",
+    "start": "parcel src/index.html"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3",
+    "github-fork-ribbon-css": "^0.2.3"
+  },
+  "devDependencies": {
+    "parcel": "^2.13.2"
+  }
+}
