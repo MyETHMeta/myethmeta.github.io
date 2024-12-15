@@ -44,9 +44,10 @@
                   </span>
                 </p>
                 <p class="text-secondary mb-1">
-                  {{ address }}
+                  <span class="d-block d-md-none">{{ address.slice(0, 8) + '...' + address.slice(-8) }}</span>
+                  <span class="d-none d-md-block">{{ address }}</span>
                 </p>
-                <button class="btn btn-outline-dark" @click="copyToClipboard">
+                <button class="btn btn-outline-dark me-2" @click="copyToClipboard">
                   <i class="bi bi-clipboard"></i>
                 </button>
                 <button class="btn btn-outline-dark" @click="showQRPanel">
@@ -58,7 +59,7 @@
         </div>
         <div class="d-flex flex-column align-items-center text-center mt-3">
           <button
-            class="btn btn-lg btn-outline-dark w-100"
+            class="btn btn-lg btn-outline-dark w-100 mb-3"
             v-if="!editMode"
             @click="jumpToEditMetadata"
           >
@@ -302,6 +303,7 @@
                       "
                       v-if="!editMode"
                     />
+                    <span v-if="!editMode">&nbsp;</span>
                     <a
                       :href="webpage.value"
                       class="link-secondary"
@@ -471,11 +473,72 @@ class ProfilePage extends Vue {
     return url;
   }
 
+  public deleteIM(idx: number) {
+    this.meta.ims.splice(idx, 1);
+  }
+
+  public addIM() {
+    if (!this.meta) return;
+    if (!this.meta.ims) this.meta.ims = [];
+    this.meta.ims.push({
+      type: this.editModelIM.type,
+      value: this.editModelIM.username,
+    });
+    this.editModelIM = {
+      type: "",
+      username: "",
+    };
+  }
+
   public getAccountUrl(domain: string, username: string) {
     let url = "#";
     if (domain == "twitter.com") url = "https://twitter.com/@" + username;
     if (domain == "github.com") url = "https://github.com/" + username;
     return url;
+  }
+
+  public deleteAccount(idx: number) {
+    this.meta.accounts.splice(idx, 1);
+  }
+
+  public addAccount() {
+    if (!this.meta) return;
+    if (!this.meta.accounts) this.meta.accounts = [];
+    this.meta.accounts.push({
+      domain: this.editModelAccount.domain,
+      username: this.editModelAccount.username,
+    });
+    this.editModelAccount = {
+      domain: "",
+      username: "",
+    };
+  }
+
+  public deleteWebpage(idx: number) {
+    this.meta.urls.splice(idx, 1);
+  }
+
+  public addWebpage() {
+    if (!this.meta) return;
+    if (!this.meta.urls) this.meta.urls = [];
+    this.meta.urls.push({ value: this.editModelWebpage });
+    this.editModelWebpage = "";
+  }
+
+  public deleteEmail(idx: number) {
+    this.meta.emails.splice(idx, 1);
+  }
+
+  public addEmail() {
+    if (!this.meta) return;
+    if (!this.meta.emails) this.meta.emails = [];
+    this.meta.emails.push({ value: this.editModelEmail, primary: false });
+    this.editModelEmail = "";
+  }
+
+  public setPrimaryEmail(idx: number) {
+    for (let email of this.meta.emails) email.primary = false;
+    this.meta.emails[idx].primary = true;
   }
 
   public async backToViewMode() {
@@ -488,6 +551,16 @@ class ProfilePage extends Vue {
     window.location.hash = account + "/edit";
   }
 
+  public thumbnailChanged() {
+    let reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target) {
+        this.meta.thumbnailUrl = e.target.result as string;
+      }
+    };
+    reader.readAsDataURL((this.$refs.thumbnailFileInput as any).files[0]);
+  }
+
   get givenName(): string {
     if (!this.meta || !this.meta.name || !this.meta.name.givenName) return "";
     return this.meta.name.givenName;
@@ -495,12 +568,13 @@ class ProfilePage extends Vue {
 
   set givenName(value: string) {
     if (!this.meta) return;
-    if (!this.meta.name)
-      this.$set(this.meta, "name", {
+    if (!this.meta.name) {
+      this.meta.name = {
         familyName: "",
         givenName: "",
         formatted: "",
-      });
+      };
+    }
     this.meta.name.givenName = value;
     this.meta.name.formatted =
       this.meta.name.givenName + " " + this.meta.name.familyName;
@@ -513,12 +587,13 @@ class ProfilePage extends Vue {
 
   set familyName(value: string) {
     if (!this.meta) return;
-    if (!this.meta.name)
-      this.$set(this.meta, "name", {
+    if (!this.meta.name) {
+      this.meta.name = {
         familyName: "",
         givenName: "",
         formatted: "",
-      });
+      };
+    }
     this.meta.name.familyName = value;
     this.meta.name.formatted =
       this.meta.name.givenName + " " + this.meta.name.familyName;
@@ -562,7 +637,24 @@ export default toNative(ProfilePage);
 </script>
 
 <style scoped>
-.profile-page {
-  padding: 20px;
+pre {
+  outline: 1px solid #ccc;
+  padding: 5px;
+  margin: 5px;
+}
+.string {
+  color: green;
+}
+.number {
+  color: darkorange;
+}
+.boolean {
+  color: blue;
+}
+.null {
+  color: magenta;
+}
+.key {
+  color: red;
 }
 </style>
