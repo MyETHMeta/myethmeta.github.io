@@ -44,10 +44,15 @@
                   </span>
                 </p>
                 <p class="text-secondary mb-1">
-                  <span class="d-block d-md-none">{{ address.slice(0, 8) + '...' + address.slice(-8) }}</span>
+                  <span class="d-block d-md-none">{{
+                    address.slice(0, 8) + "..." + address.slice(-8)
+                  }}</span>
                   <span class="d-none d-md-block">{{ address }}</span>
                 </p>
-                <button class="btn btn-outline-dark me-2" @click="copyToClipboard">
+                <button
+                  class="btn btn-outline-dark me-2"
+                  @click="copyToClipboard"
+                >
                   <i class="bi bi-clipboard"></i>
                 </button>
                 <button class="btn btn-outline-dark" @click="showQRPanel">
