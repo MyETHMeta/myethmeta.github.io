@@ -22,7 +22,7 @@
     "vue-facing-decorator": "^3.0.4"
   },
   "devDependencies": {
-    "@parcel/transformer-vue": "2.13.2",
+    "@parcel/transformer-vue": "2.13.3",
     "parcel": "^2.13.2"
   }
 }

@@ -373,11 +373,32 @@
               aria-label="Close"
             ></button>
           </div>
-          <div
-            class="modal-body d-flex flex-column align-items-center"
-            style="max-height: 500px"
-          >
+          <div class="modal-body d-flex flex-column" style="max-height: 500px">
             <pre class="w-100" v-html="generatedJSON"></pre>
+            <div class="text-start mt-3">
+              <p>
+                Upload the generated JSON to IPFS, Swarm, or any centralized
+                provider. For example, my JSON is uploaded to
+                <a
+                  href="https://github.com/TheBojda/thebojda.github.com/blob/master/docs/myethmeta.json"
+                  target="_blank"
+                  >GitHub</a
+                >
+                and available through
+                <a href="https://thebojda.github.io/myethmeta.json"
+                  >GitHub pages</a
+                >.
+              </p>
+              <p>
+                Write the URL to the Gnosis chain by <i>setMetaURI</i> using
+                <a
+                  href="https://gnosisscan.io/address/0x63ba8dfaeba09a63c1bcb47a46229f14707af995#writeContract"
+                  target="_blank"
+                  >Gnosis scan</a
+                >.
+              </p>
+              <p>Profile hosting service for better UX is coming soon...</p>
+            </div>
           </div>
         </div>
       </div>
